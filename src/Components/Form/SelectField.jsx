@@ -1,18 +1,12 @@
 import React from "react";
 import { Controller } from "react-hook-form";
 
-const SelectField = ({
-  label,
-  name,
-  control,
-  validation,
-  options,
-  errors,
-}) => {
+const SelectField = ({ label, name, control, options, errors, validation }) => {
   return (
-    <div className="col-span-2 lg:col-span-1">
-      <label className="block mb-2 text-[14px] font-normal">
-        {label} <span className="text-red-500">*</span>
+    <div className="flex flex-col gap-[6px]">
+      <label className="block text-[16px] font-[550] leading-[24px] text-[#1d1d22]">
+        {label}
+        {validation?.required && <span className="text-red-500"> *</span>}
       </label>
       <Controller
         name={name}
@@ -21,18 +15,18 @@ const SelectField = ({
         render={({ field }) => (
           <select
             {...field}
-            className="w-full p-2 border border-[#dad7dc] rounded bg-white text-[#9b9b9b]"
+            className="border border-gray-300 rounded-[10px] p-[12px] text-[14px] leading-[20px] font-[450] focus:outline-none focus:ring-1 focus:ring-red-500"
           >
             <option value="">Select an option</option>
-            {options?.map((option, index) => (
-              <option key={index} value={option.value}>
+            {options.map((option) => (
+              <option key={option.value} value={option.value}>
                 {option.label}
               </option>
             ))}
           </select>
         )}
       />
-      {errors[name] && (
+      {errors && errors[name] && (
         <p className="text-red-500 text-sm">{errors[name].message}</p>
       )}
     </div>
